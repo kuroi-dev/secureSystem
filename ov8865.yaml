@@ -1,0 +1,8 @@
+# Configuración para sensor ov8865 (cámara trasera Surface Pro 5)
+
+version: 1
+
+algorithms:
+  - Agc:
+  - Awb:
+  - BlackLevelCorrection:

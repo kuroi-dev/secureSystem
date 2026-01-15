@@ -1,0 +1,9 @@
+# Configuración para sensor ov5693 (cámara frontal Surface Pro 5)
+# Configuración básica
+
+version: 1
+
+algorithms:
+  - Agc:
+  - Awb:
+  - BlackLevelCorrection:
