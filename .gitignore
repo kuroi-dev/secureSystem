@@ -15,3 +15,45 @@ surface-linux-kernel-*.buildinfo
 /.config/libcamera
 /.local/share/libcamera
 
+# Virtual Environment
+entornoSecureSystem/
+venv/
+env/
+ENV/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Datasets (imágenes de entrenamiento)
+dataset/
+yolo_dataset/
+
+# YOLO Training (modelos y resultados)
+runs/
+*.pt
+weights/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+*.log
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+*.ipynb
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
