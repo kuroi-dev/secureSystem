@@ -32,7 +32,7 @@ def train():
     print("=" * 60)
     
     results = model.train(
-        data='yolo_dataset/data.yaml',  # Ruta al archivo de configuración
+        data='../yolo_dataset/data.yaml',  # Ruta al archivo de configuración
         epochs=50,                       # Número de épocas de entrenamiento
         imgsz=640,                       # Tamaño de imagen
         batch=16,                        # Tamaño del batch

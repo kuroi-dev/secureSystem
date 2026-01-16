@@ -8,7 +8,7 @@ import random
 from pathlib import Path
 
 # Configuración
-DATASET_ROOT = "yolo_dataset"
+DATASET_ROOT = "../yolo_dataset"
 TRAIN_RATIO = 0.8  # 80% entrenamiento, 20% validación
 
 def prepare_yolo_dataset():
@@ -30,7 +30,7 @@ def prepare_yolo_dataset():
         print(f"✓ Carpeta creada: {folder}")
     
     # Obtener lista de imágenes con etiquetas
-    label_files = list(Path("dataset/labels").glob("*.txt"))
+    label_files = list(Path("../dataset/labels").glob("*.txt"))
     print(f"\n✓ Encontradas {len(label_files)} imágenes etiquetadas")
     
     # Mezclar aleatoriamente
@@ -56,7 +56,7 @@ def prepare_yolo_dataset():
         shutil.copy(label_file, f"{DATASET_ROOT}/labels/train/{base_name}.txt")
         
         # Copiar imagen
-        img_file = f"dataset/con_cubo/{base_name}.jpg"
+        img_file = f"../dataset/con_cubo/{base_name}.jpg"
         if os.path.exists(img_file):
             shutil.copy(img_file, f"{DATASET_ROOT}/images/train/{base_name}.jpg")
     
@@ -68,7 +68,7 @@ def prepare_yolo_dataset():
         shutil.copy(label_file, f"{DATASET_ROOT}/labels/val/{base_name}.txt")
         
         # Copiar imagen
-        img_file = f"dataset/con_cubo/{base_name}.jpg"
+        img_file = f"../dataset/con_cubo/{base_name}.jpg"
         if os.path.exists(img_file):
             shutil.copy(img_file, f"{DATASET_ROOT}/images/val/{base_name}.jpg")
     
