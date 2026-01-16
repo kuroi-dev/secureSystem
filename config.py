@@ -4,7 +4,7 @@ Configuración del proyecto
 
 # Configuración de cámara
 # Tu cámara FaceCam 1000X está en el índice 14
-CAMERA_INDEX = 14  # Índice de la cámara a usar (14 = FaceCam 1000X)
+CAMERA_INDEX = 0  # Cámara principal del sistema
 FRAME_WIDTH = 640
 FRAME_HEIGHT = 480
 

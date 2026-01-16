@@ -13,8 +13,8 @@ def review_labels():
     print("=" * 60)
     print("Instrucciones:")
     print("  - Presiona 'd' para MARCAR/DESMARCAR para eliminar")
-    print("  - Presiona ESPACIO o → para ir a la SIGUIENTE imagen")
-    print("  - Presiona ← para ir a la imagen ANTERIOR")
+    print("  - Presiona ESPACIO o 'n' para ir a la SIGUIENTE imagen")
+    print("  - Presiona 'p' para ir a la imagen ANTERIOR")
     print("  - Presiona 'q' para SALIR y eliminar las marcadas")
     print("=" * 60)
     
@@ -76,7 +76,7 @@ def review_labels():
         cv2.putText(img, info, (10, 30),
                    cv2.FONT_HERSHEY_SIMPLEX, 0.7, text_color, 2)
         
-        instrucciones = "D: Marcar/Desmarcar | ESPACIO/→: Siguiente | ←: Anterior | Q: Salir"
+        instrucciones = "D: Marcar/Desmarcar | ESPACIO/N: Siguiente | P: Anterior | Q: Salir"
         cv2.putText(img, instrucciones, (10, img.shape[0] - 20),
                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
         
@@ -99,13 +99,13 @@ def review_labels():
             # No avanzar, solo redibujar para mostrar el cambio
             continue
         
-        # ESPACIO o flecha derecha (código 83) - Siguiente
-        elif key == ord(' ') or key == 83:
+        # ESPACIO o flecha derecha - Siguiente
+        elif key == ord(' ') or key == ord('n') or key == ord('N'):
             print(f"→ {label_name}")
             idx += 1
         
-        # Flecha izquierda (código 81) - Anterior  
-        elif key == 81:
+        # Flecha izquierda o 'p' (previous) - Anterior  
+        elif key == ord('p') or key == ord('P'):
             if idx > 0:
                 idx -= 1
                 print(f"← Volviendo")

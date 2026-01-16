@@ -23,7 +23,7 @@ def train():
     print(f"  - Épocas: 50 (cuántas veces ve todas las imágenes)")
     print(f"  - Tamaño de imagen: 640x640")
     print(f"  - Batch size: 16 (imágenes procesadas a la vez)")
-    print(f"  - Device: CPU")
+    print(f"  - Device: CUDA - RTX 3070")
     print()
     
     # Entrenar el modelo
@@ -39,7 +39,7 @@ def train():
         name='rubik_detector',           # Nombre del experimento
         patience=10,                     # Parar si no mejora en 10 épocas
         save=True,                       # Guardar checkpoints
-        device='cpu',                    # Usar CPU (cambia a 'cuda' si tienes GPU)
+        device='cuda',                    # Usar GPU CUDA (RTX 3070)
         workers=4,                       # Número de workers para cargar datos
         pretrained=True,                 # Usar pesos pre-entrenados
         optimizer='AdamW',               # Optimizador

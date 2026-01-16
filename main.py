@@ -1,10 +1,10 @@
 """
-Script principal para detección de cubo de Rubik en tiempo real
-Este programa abre la cámara web y detecta cubos de Rubik
+Script principal para detección de cubo de Rubik en tiempo real usando YOLO
+Este programa abre la cámara web y detecta cubos de Rubik con IA
 """
 import cv2
 from camera_handler import CameraHandler
-from detector import RubikDetector
+from ultralytics import YOLO
 import config
 
 
@@ -12,17 +12,20 @@ def main():
     """Función principal del programa"""
     # Mostramos el título del programa
     print("=" * 50)
-    print("Detector de Cubo de Rubik - Secure System")
+    print("Detector de Cubo de Rubik - YOLO AI")
     print("=" * 50)
     print("Presiona 'q' para salir")
     print("Presiona 'r' para resetear contador")
     print("=" * 50)
     
+    # Cargar el modelo YOLO entrenado
+    print("Cargando modelo YOLO entrenado...")
+    model_path = "runs/detect/rubik_detector2/weights/best.pt"
+    detector = YOLO(model_path)
+    print(f"✓ Modelo YOLO cargado desde: {model_path}")
+    
     # Creamos el objeto que maneja la cámara
     camera = CameraHandler(config.CAMERA_INDEX)
-    
-    # Creamos el objeto que detecta los cubos
-    detector = RubikDetector()
     
     # Intentamos iniciar la cámara
     try:
@@ -49,13 +52,38 @@ def main():
             print("Error al capturar frame")
             break
         
-        # Buscamos cubos en el frame capturado
-        # Retorna: lista de cubos encontrados y el frame con rectángulos dibujados
-        cubos, frame_procesado = detector.detect(frame)
+        # Buscamos cubos con YOLO
+        # Ejecutamos detección con el modelo entrenado
+        results = detector(frame, verbose=False)
+        
+        # Procesamos los resultados
+        cubos_detectados = []
+        frame_procesado = frame.copy()
+        
+        if len(results[0].boxes) > 0:
+            for box in results[0].boxes:
+                # Obtener coordenadas y confianza
+                x1, y1, x2, y2 = map(int, box.xyxy[0])
+                confidence = float(box.conf[0])
+                
+                # Solo considerar detecciones con alta confianza
+                if confidence > 0.5:
+                    cubos_detectados.append({
+                        'bbox': (x1, y1, x2 - x1, y2 - y1),
+                        'confidence': confidence
+                    })
+                    
+                    # Dibujar rectángulo verde
+                    cv2.rectangle(frame_procesado, (x1, y1), (x2, y2), (0, 255, 0), 3)
+                    
+                    # Añadir texto con confianza
+                    label = f"Cubo Rubik {confidence:.2f}"
+                    cv2.putText(frame_procesado, label, (x1, y1 - 10),
+                               cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
         
         # Actualizamos el contador de detecciones
         # Solo contamos cuando el cubo APARECE (no cada frame)
-        if len(cubos) > 0:
+        if len(cubos_detectados) > 0:
             # Hay al menos un cubo detectado
             if not current_detection:
                 # Es una nueva detección (antes no había cubo)
@@ -75,8 +103,10 @@ def main():
                    config.TEXT_COLOR, config.FONT_THICKNESS)
         
         # Preparamos el texto del estado actual
-        if len(cubos) > 0:
-            status_text = "Estado: DETECTADO"
+        if len(cubos_detectados) > 0:
+            # Mostrar confianza del primer cubo detectado
+            best_confidence = max(cubo['confidence'] for cubo in cubos_detectados)
+            status_text = f"Estado: DETECTADO ({best_confidence:.2f})"
             status_color = (0, 255, 0)  # Verde
         else:
             status_text = "Estado: Buscando..."
@@ -86,6 +116,12 @@ def main():
         cv2.putText(frame_procesado, status_text, (10, 60),
                    config.FONT, config.FONT_SCALE, 
                    status_color, config.FONT_THICKNESS)
+        
+        # Añadir información del modelo
+        model_info = "Modelo: YOLO v8 entrenado"
+        cv2.putText(frame_procesado, model_info, (10, 90),
+                   config.FONT, config.FONT_SCALE * 0.7, 
+                   (255, 255, 0), config.FONT_THICKNESS)
         
         # Mostramos el frame procesado en una ventana
         cv2.imshow(config.WINDOW_NAME, frame_procesado)
