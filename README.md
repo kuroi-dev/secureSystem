@@ -81,14 +81,17 @@ secureSystem/
 ## 📸 Resultados y Ejemplos
 
 ### 🎯 Detección en Tiempo Real
-![Detección Principal](docs/images/detection_main.png)
+<img width="1390" height="1059" alt="image" src="https://github.com/user-attachments/assets/daa164d4-d986-42ab-9022-51252dc01613" />
+
 *Interfaz principal mostrando detección con confianza del 95%*
 
 ### 🔍 Ejemplos de Detección
-![Ejecution_result](docs/images/ejecution_result.png)
+![Screenshot 2026-01-15 211122](https://github.com/user-attachments/assets/858f1cbf-cc27-48aa-bbfc-4d75995daec9)
 
 ### 📊 Métricas de Entrenamiento
-![Training Metrics](docs/images/training_metrics.png)
+<img width="851" height="841" alt="image" src="https://github.com/user-attachments/assets/40cc7a42-94c1-4e39-b869-9df1d4721eb8" />
+
+
 *Progreso de entrenamiento: Pérdida y precisión por época*
 
 ## 🔧 Desarrollo
